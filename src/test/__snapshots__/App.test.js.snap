@@ -1,11 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`correctly renders enzyme 1`] = `
-<div
-  className="App"
->
-  <h1>
-    Initial setup
-  </h1>
-</div>
+exports[`correctly compares to the snapshot 1`] = `
+<ChakraProvider>
+  <Main />
+</ChakraProvider>
 `;
