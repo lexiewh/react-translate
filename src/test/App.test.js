@@ -1,10 +1,12 @@
-import { render, screen } from '@testing-library/react';
-// eslint-disable-next-line no-unused-vars
-import { toBeInTheDocument } from '@testing-library/jest-dom';
 import App from '../App';
+import Enzyme, { shallow } from 'enzyme'
+import toJson from 'enzyme-to-json'
+import Adapter from 'enzyme-adapter-react-16'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/Initial setup/i);
-  expect(linkElement).toBeInTheDocument();
-});
+Enzyme.configure({ adapter: new Adapter() })
+
+it('correctly renders enzyme', () => {
+  const wrapper = shallow(<App />)
+
+  expect(toJson(wrapper)).toMatchSnapshot()
+})
