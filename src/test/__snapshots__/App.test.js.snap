@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`correctly compares to the snapshot 1`] = `
-<ChakraProvider>
-  <Main />
-</ChakraProvider>
-`;

@@ -7,7 +7,7 @@ import {
   Button
 } from "@chakra-ui/react"
 
-function TranslateForm() {
+function TranslateForm({ onSubmit }) {
 
     function validateText(value) {
     let error
@@ -17,13 +17,16 @@ function TranslateForm() {
     return error
   }
 
+  function handleSubmit(values, actions){
+    //console.log(JSON.stringify(values, null, 2))
+    actions.setSubmitting(false)
+    onSubmit(values)
+  }
+
     return (
         <Formik
             initialValues={{ originalText: '' }}
-            onSubmit={(values, actions) => {
-                console.log(JSON.stringify(values, null, 2))
-                actions.setSubmitting(false)
-            }}
+            onSubmit={handleSubmit}
         >
             {props => (
             <Form>
@@ -32,13 +35,12 @@ function TranslateForm() {
                         <FormControl isInvalid={form.errors.originalText && form.touched.originalText}>
                             <FormLabel htmlFor="originalText">Text to Translate</FormLabel>
                             <Textarea {...field} id="originalText" />
-                            <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                            <FormErrorMessage data-testid='form-error'>{form.errors.originalText}</FormErrorMessage>
                         </FormControl>
                     )}
                 </Field>
                 <Button
                     mt={4}
-                    colorScheme="cyan"
                     isLoading={props.isSubmitting}
                     loadingText="Submitting"
                     type="submit"
