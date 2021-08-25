@@ -1,4 +1,6 @@
 import { Formik, Form, Field } from 'formik'
+import axios from 'axios'
+import qs from 'qs'
 import {
   FormControl,
   FormLabel,
@@ -10,18 +12,39 @@ import {
 function TranslateForm({ onSubmit }) {
 
     function validateText(value) {
-    let error
-    if (!value) {
-      error = "Text is required"
+        let error
+        if (!value) {
+        error = "Text is required"
+        }
+        return error
     }
-    return error
-  }
 
-  function handleSubmit(values, actions){
-    //console.log(JSON.stringify(values, null, 2))
-    actions.setSubmitting(false)
-    onSubmit(values)
-  }
+    function handleSubmit(values, actions){
+        console.log(process.env.RAPID_HOST)
+        const options = {
+            method: 'POST',
+            url: 'https://google-translate1.p.rapidapi.com/language/translate/v2',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'x-rapidapi-host': process.env.REACT_APP_RAPID_HOST,
+                'x-rapidapi-key': process.env.REACT_APP_RAPID_KEY
+            },
+            data: qs.stringify({
+                q : `Hello World!`,
+                source : `en`,
+                target : `it`
+            })
+        }
+
+        axios.request(options).then(function (response) {
+            console.log(response.data);
+        }).catch(function (error) {
+            console.error(error);
+        })
+
+        actions.setSubmitting(false)
+        onSubmit(values)
+    }
 
     return (
         <Formik
