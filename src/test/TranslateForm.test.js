@@ -1,9 +1,11 @@
 import TranslateForm from '../components/TranslateForm'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import {render, waitFor, fireEvent, screen} from '@testing-library/react'
+import { render, waitFor, fireEvent, screen, cleanup } from '@testing-library/react'
 
 Enzyme.configure({ adapter: new Adapter() })
+
+afterEach(cleanup)
 
 describe('TranslateForm unit tests', () => {
     it('should include Formik', () => {

@@ -6,7 +6,8 @@ import {
   FormLabel,
   FormErrorMessage,
   Textarea,
-  Button
+  Button,
+  Text
 } from "@chakra-ui/react"
 
 function TranslateForm({ onSubmit }) {
@@ -19,8 +20,7 @@ function TranslateForm({ onSubmit }) {
         return error
     }
 
-    function handleSubmit(values, actions){
-        console.log(process.env.RAPID_HOST)
+    function handleSubmit(values, actions) {
         const options = {
             method: 'POST',
             url: 'https://google-translate1.p.rapidapi.com/language/translate/v2',
@@ -30,18 +30,17 @@ function TranslateForm({ onSubmit }) {
                 'x-rapidapi-key': process.env.REACT_APP_RAPID_KEY
             },
             data: qs.stringify({
-                q : `Hello World!`,
+                q : values.originalText,
                 source : `en`,
                 target : `it`
             })
         }
 
         axios.request(options).then(function (response) {
-            console.log(response.data);
+            console.log(response.data.data.translations[0].translatedText);
         }).catch(function (error) {
             console.error(error);
         })
-
         actions.setSubmitting(false)
         onSubmit(values)
     }
@@ -52,11 +51,11 @@ function TranslateForm({ onSubmit }) {
             onSubmit={handleSubmit}
         >
             {props => (
-            <Form>
+            <Form className='form-container'>
                 <Field name='originalText' id='originalText' validate={validateText}>
                     {({ field, form }) => (
                         <FormControl isInvalid={form.errors.originalText && form.touched.originalText}>
-                            <FormLabel htmlFor="originalText">Text to Translate</FormLabel>
+                            <FormLabel htmlFor="originalText">English Text to Translate</FormLabel>
                             <Textarea {...field} id="originalText" />
                             <FormErrorMessage data-testid='form-error'>{form.errors.originalText}</FormErrorMessage>
                         </FormControl>
@@ -64,12 +63,19 @@ function TranslateForm({ onSubmit }) {
                 </Field>
                 <Button
                     mt={4}
+                    colorScheme='cyan'
                     isLoading={props.isSubmitting}
                     loadingText="Submitting"
                     type="submit"
+                    id='submit-btn'
+                    size='lg'
                 >
-                    Submit
+                    Translate
                 </Button>
+                <div className='result-container'>
+                    <Text className='result-label'>Italian Translation</Text>
+                    <div className='result-box'></div>
+                </div>
             </Form>)}
         </Formik>
     )
