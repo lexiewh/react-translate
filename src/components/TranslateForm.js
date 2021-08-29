@@ -62,7 +62,7 @@ function TranslateForm({ onSubmit }) {
                 </Field>
                 <Button
                     mt={4}
-                    colorScheme='cyan'
+                    colorScheme='teal'
                     isLoading={props.isSubmitting}
                     type="submit"
                     id='submit-btn'
