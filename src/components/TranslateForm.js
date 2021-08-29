@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import axios from 'axios'
 import qs from 'qs'
@@ -11,6 +12,7 @@ import {
 } from "@chakra-ui/react"
 
 function TranslateForm({ onSubmit }) {
+    const [resultText, setResultText] = useState('')
 
     function validateText(value) {
         let error
@@ -20,15 +22,11 @@ function TranslateForm({ onSubmit }) {
         return error
     }
 
-    function handleSubmit(values, actions) {
+    async function handleSubmit(values, actions) {
+        actions.setSubmitting(true)
         const options = {
             method: 'POST',
-            url: 'https://google-translate1.p.rapidapi.com/language/translate/v2',
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded',
-                'x-rapidapi-host': process.env.REACT_APP_RAPID_HOST,
-                'x-rapidapi-key': process.env.REACT_APP_RAPID_KEY
-            },
+            url: `https://translation.googleapis.com/language/translate/v2?key=${process.env.REACT_APP_API_KEY}`,
             data: qs.stringify({
                 q : values.originalText,
                 source : `en`,
@@ -36,8 +34,9 @@ function TranslateForm({ onSubmit }) {
             })
         }
 
-        axios.request(options).then(function (response) {
-            console.log(response.data.data.translations[0].translatedText);
+        await axios.request(options).then(function (response) {
+            const translatedText = response.data.data.translations[0].translatedText
+            setResultText(translatedText)
         }).catch(function (error) {
             console.error(error);
         })
@@ -51,7 +50,7 @@ function TranslateForm({ onSubmit }) {
             onSubmit={handleSubmit}
         >
             {props => (
-            <Form className='form-container'>
+            <Form className='form-container' onSubmit={props.handleSubmit}>
                 <Field name='originalText' id='originalText' validate={validateText}>
                     {({ field, form }) => (
                         <FormControl isInvalid={form.errors.originalText && form.touched.originalText}>
@@ -65,7 +64,6 @@ function TranslateForm({ onSubmit }) {
                     mt={4}
                     colorScheme='cyan'
                     isLoading={props.isSubmitting}
-                    loadingText="Submitting"
                     type="submit"
                     id='submit-btn'
                     size='lg'
@@ -74,7 +72,9 @@ function TranslateForm({ onSubmit }) {
                 </Button>
                 <div className='result-container'>
                     <Text className='result-label'>Italian Translation</Text>
-                    <div className='result-box'></div>
+                    <div className='result-box'>
+                        <Text size='md'>{resultText}</Text>
+                    </div>
                 </div>
             </Form>)}
         </Formik>

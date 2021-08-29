@@ -19,8 +19,8 @@ describe('TranslateForm unit tests', () => {
         const mock = jest.fn()
         const { getByLabelText, getByText } = render(<TranslateForm onSubmit={mock} />)
 
-        const btn = getByText('Submit')
-        const text = getByLabelText('Text to Translate')
+        const btn = getByText('Translate')
+        const text = getByLabelText('English Text to Translate')
 
         fireEvent.change(text, {
             target: {
@@ -39,8 +39,8 @@ describe('TranslateForm unit tests', () => {
         const mock = jest.fn()
         const { getByLabelText, getByText } = render(<TranslateForm onSubmit={mock} />)
 
-        const btn = getByText('Submit')
-        const text = getByLabelText('Text to Translate')
+        const btn = getByText('Translate')
+        const text = getByLabelText('English Text to Translate')
 
         fireEvent.change(text, {
             target: {
