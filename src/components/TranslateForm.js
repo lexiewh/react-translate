@@ -13,6 +13,7 @@ import {
 
 function TranslateForm({ onSubmit }) {
     const [resultText, setResultText] = useState('')
+    const [apiError, setApiError] = useState('')
 
     function validateText(value) {
         let error
@@ -38,7 +39,7 @@ function TranslateForm({ onSubmit }) {
             const translatedText = response.data.data.translations[0].translatedText
             setResultText(translatedText)
         }).catch(function (error) {
-            console.error(error);
+            setApiError(error)
         })
         actions.setSubmitting(false)
         onSubmit(values)
@@ -73,7 +74,8 @@ function TranslateForm({ onSubmit }) {
                 <div className='result-container'>
                     <Text className='result-label'>Italian Translation</Text>
                     <div className='result-box'>
-                        <Text size='md'>{resultText}</Text>
+                        {apiError ? <Text size='md' style={{color: 'red'}}>{apiError}</Text>:
+                            <Text size='md'>{resultText}</Text>}
                     </div>
                 </div>
             </Form>)}
