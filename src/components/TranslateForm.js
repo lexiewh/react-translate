@@ -11,7 +11,7 @@ import {
   Text
 } from "@chakra-ui/react"
 
-function TranslateForm({ onSubmit }) {
+function TranslateForm() {
     const [resultText, setResultText] = useState('')
     const [apiError, setApiError] = useState('')
 
@@ -42,7 +42,6 @@ function TranslateForm({ onSubmit }) {
             setApiError(error)
         })
         actions.setSubmitting(false)
-        onSubmit(values)
     }
 
     return (
@@ -75,7 +74,7 @@ function TranslateForm({ onSubmit }) {
                     <Text className='result-label'>Italian Translation</Text>
                     <div className='result-box'>
                         {apiError ? <Text size='md' style={{color: 'red'}}>{apiError}</Text>:
-                            <Text size='md'>{resultText}</Text>}
+                            <Text size='md' data-testid='result-correct'>{resultText}</Text>}
                     </div>
                 </div>
             </Form>)}

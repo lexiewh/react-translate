@@ -16,8 +16,7 @@ describe('TranslateForm unit tests', () => {
     })
 
     it('should submit form', async () => {
-        const mock = jest.fn()
-        const { getByLabelText, getByText } = render(<TranslateForm onSubmit={mock} />)
+        const { getByLabelText, getByText, getByTestId } = render(<TranslateForm />)
 
         const btn = getByText('Translate')
         const text = getByLabelText('English Text to Translate')
@@ -30,14 +29,13 @@ describe('TranslateForm unit tests', () => {
         fireEvent.click(btn)
 
         await waitFor(() => {
-            expect(mock).toBeCalled()
-            expect(mock.mock.calls[0][0].originalText).toBe('Hello World')
+            const res = getByTestId('result-correct')
+            expect(res).toMatchObject(/Ciao mondo/)
         })
     })
 
     it('should produce an error if the textarea is blank', async() => {
-        const mock = jest.fn()
-        const { getByLabelText, getByText } = render(<TranslateForm onSubmit={mock} />)
+        const { getByLabelText, getByText } = render(<TranslateForm />)
 
         const btn = getByText('Translate')
         const text = getByLabelText('English Text to Translate')
@@ -50,8 +48,7 @@ describe('TranslateForm unit tests', () => {
         fireEvent.click(btn)
 
         await waitFor(() => {
-            expect(mock).toHaveBeenCalledTimes(0)
-            expect(screen.getByText(`Text is required`)).toBeInTheDocument()
+            expect(getByText(`Text is required`)).toBeInTheDocument()
         })
     })
 })
