@@ -6,7 +6,14 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
-      "args": ["test", "--colors", "--runInBand", "--no-cache", "--watchAll=false"],
+      "args": [
+        "test",
+        "--colors",
+        "--runInBand",
+        "--no-cache",
+        "--watchAll=false",
+        "--verbose"
+      ],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
       "console": "integratedTerminal",
@@ -15,17 +22,11 @@
       "disableOptimisticBPs": true
     },
     {
-      "name": "Update snapshots",
-      "type": "node",
+      "type": "pwa-chrome",
       "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
-      "args": ["test", "-u", "--colors", "--runInBand", "--no-cache", "--watchAll=false"],
-      "cwd": "${workspaceRoot}",
-      "protocol": "inspector",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "env": { "CI": "true" },
-      "disableOptimisticBPs": true
+      "name": "Launch Chrome against localhost",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }
