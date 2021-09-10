@@ -18,7 +18,7 @@ function TranslateForm() {
     function validateText(value) {
         let error
         if (!value) {
-        error = "Text is required"
+            error = "Text is required"
         }
         return error
     }
@@ -50,34 +50,35 @@ function TranslateForm() {
             onSubmit={handleSubmit}
         >
             {props => (
-            <Form className='form-container' onSubmit={props.handleSubmit}>
-                <Field name='originalText' id='originalText' validate={validateText}>
-                    {({ field, form }) => (
-                        <FormControl isInvalid={form.errors.originalText && form.touched.originalText}>
-                            <FormLabel htmlFor="originalText">English Text to Translate</FormLabel>
-                            <Textarea {...field} id="originalText" />
-                            <FormErrorMessage data-testid='form-error'>{form.errors.originalText}</FormErrorMessage>
-                        </FormControl>
-                    )}
-                </Field>
-                <Button
-                    mt={4}
-                    colorScheme='teal'
-                    isLoading={props.isSubmitting}
-                    type="submit"
-                    id='submit-btn'
-                    size='lg'
-                >
-                    Translate
-                </Button>
-                <div className='result-container'>
-                    <Text className='result-label'>Italian Translation</Text>
-                    <div className='result-box'>
-                        {apiError ? <Text size='md' style={{color: 'red'}}>{apiError}</Text>:
-                            <Text size='md' data-testid='result-correct'>{resultText}</Text>}
+                <Form className='form-container' onSubmit={props.handleSubmit}>
+                    <Field name='originalText' id='originalText' validate={validateText}>
+                        {({ field, form }) => (
+                            <FormControl isInvalid={form.errors.originalText && form.touched.originalText}>
+                                <FormLabel htmlFor="originalText">English Text to Translate</FormLabel>
+                                <Textarea {...field} id="originalText" />
+                                <FormErrorMessage data-testid='form-error'>{form.errors.originalText}</FormErrorMessage>
+                            </FormControl>
+                        )}
+                    </Field>
+                    <Button
+                        mt={4}
+                        colorScheme='teal'
+                        isLoading={props.isSubmitting}
+                        type="submit"
+                        id='submit-btn'
+                        size='lg'
+                    >
+                        Translate
+                    </Button>
+                    <div className='result-container'>
+                        <Text className='result-label'>Italian Translation</Text>
+                        <div className='result-box'>
+                            {apiError ? <Text size='md' style={{color: 'red'}}>{apiError}</Text>:
+                                <Text size='md' data-testid='result-correct'>{resultText}</Text>}
+                        </div>
                     </div>
-                </div>
-            </Form>)}
+                </Form>
+            )}
         </Formik>
     )
 }
