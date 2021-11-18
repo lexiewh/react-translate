@@ -4,6 +4,9 @@ node_js:
   - "14"
   - "12"
 
+env:
+  - REACT_APP_API_KEY=$REACT_APP_API_KEY
+
 script:
   - npm test
   - npm run build
